@@ -150,6 +150,6 @@ Upon successful execution (in either Simulation or Real Robot mode), a Matplotli
 
 <img width="1839" height="574" alt="image" src="https://github.com/user-attachments/assets/544ce960-b92b-4fe1-889f-85a0afed00f6" />
 
-![Robot tracing a triangle](~/Downloads/S__17301506.gif)
+![Robot tracing a triangle](assets/S__17301506.gif)
 
 *Python · Yaskawa SDK · HSES Protocol*
