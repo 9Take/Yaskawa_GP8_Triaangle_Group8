@@ -1,2 +1,6 @@
+# Yaskawa Robot SDK (อ้างอิงจาก https://github.com/UnderAutomation/Yaskawa.py)
+underautomation.yaskawa
+
+# Data Science & Plotting Libraries
 numpy==2.4.3
 matplotlib==3.10.8
