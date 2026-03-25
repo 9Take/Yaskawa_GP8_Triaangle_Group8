@@ -91,14 +91,7 @@ source .yaskava_env/bin/activate
 
 ### 3. Install Dependencies
 
-Create a `requirements.txt` file (if not already present) with the following content:
-```text
-underautomation.yaskawa
-numpy==2.4.3
-matplotlib==3.10.8
-```
-
-Then, install them:
+install them:
 ```bash
 pip install -r requirements.txt
 ```
