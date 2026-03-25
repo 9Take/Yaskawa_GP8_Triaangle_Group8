@@ -15,7 +15,7 @@ def main():
     # =========================================================
     # ⚙️ ส่วนตั้งค่าการทำงาน 
     # =========================================================
-    SIMULATION_MODE = TRUE   # รันหุ่นจริง!
+    SIMULATION_MODE = False   # รันหุ่นจริง!
     
     ROBOT_SPEED = 10         
     STEP_SIZE =  80    
@@ -64,7 +64,66 @@ def main():
     recorded_j4, recorded_j5, recorded_j6 = [], [], []
 
     if not SIMULATION_MODE:
+        robot = YaskawaRobot()
+        parameters = ConnectParameters("192.168.10.101")
+        parameters.ping_before_connect = True
         
+        try:
+            print("Connecting to YRC1000micro...")
+            robot.connect(parameters)
+            
+            if robot.high_speed_e_server.connected:
+                print("Connected! Resetting alarms...")
+                robot.high_speed_e_server.alarm_reset(AlarmResetType.Reset)
+                time.sleep(1)
+
+                current_pos = robot.high_speed_e_server.get_robot_cartesian_position()
+                robot_posture = current_pos.form
+
+                print("Turning Servo ON...")
+                robot.high_speed_e_server.servo_command(OnOffCommandType.Servo, True)
+                time.sleep(0.5)
+
+                print(f"Executing Locked-EE Trajectory at Speed: {ROBOT_SPEED}%...")
+                for pt in trajectory_points:
+                    x, y, z, rx, ry, rz = pt
+                    
+                    robot.high_speed_e_server.move_cartesian(
+                        x=x, y=y, z=z, 
+                        rx=rx, ry=ry, rz=rz,
+                        speed=ROBOT_SPEED,
+                        posture=robot_posture,
+                        commandtype=PositionCommandType.LinkAbsolute,
+                        classification=PositionCommandClassification.LinkPercent,
+                        coordinate=PositionCommandOperationCoordinate.Base
+                    )
+                    
+                    time.sleep(DELAY_BETWEEN_STEPS)
+                    
+                    recorded_y.append(y)
+                    recorded_z.append(z)
+                    recorded_rx.append(rx)
+                    recorded_ry.append(ry)
+                    recorded_rz.append(rz)
+                    
+                    # 🎯 อ่านค่า Joint (แก้ไขตาม Example ของ SDK)
+                    joint_pos = robot.high_speed_e_server.get_robot_joint_position()
+                    axes = joint_pos.axes
+                    
+                    if len(axes) >= 6:
+                        recorded_j1.append(axes[0])
+                        recorded_j2.append(axes[1])
+                        recorded_j3.append(axes[2])
+                        recorded_j4.append(axes[3])
+                        recorded_j5.append(axes[4])
+                        recorded_j6.append(axes[5])
+                    
+                print("Trajectory Completed Successfully!")
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            robot.disconnect()
+            print("Disconnected.")
     else:
         print("--- RUNNING IN SIMULATION MODE ---")
         # (ส่วนจำลอง โค้ดยังเหมือนเดิม)
