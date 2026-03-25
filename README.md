@@ -1,3 +1,4 @@
+
 # 🤖 Yaskawa GP8 Triangle Trajectory
 
 > Robot arm control service for tracing an equilateral triangle — built with **Python + Yaskawa SDK (HSES)**, featuring real-time kinematic simulation and joint pulse tracking.
@@ -68,9 +69,11 @@ Ensure the following are prepared before running the script:
 
 ### 1. Clone the Repository
 ```bash
+git clone [Yaskawa.py](https://github.com/UnderAutomation/Yaskawa.py)
 git clone <your-repository-url>
 cd <your-project-folder>
 ```
+Before do next step make sure you already following the requirements of [Yaskawa.py]
 
 ### 2. Configure Virtual Environment (Recommended)
 
