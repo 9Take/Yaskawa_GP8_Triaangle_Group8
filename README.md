@@ -28,7 +28,9 @@ The program commands a Yaskawa industrial robot (e.g., YRC1000micro) to draw a *
 
 ## 🏗️ Architecture
 
-The Python script communicates directly with the Yaskawa Controller over a local network.
+The Python script communicate
+
+s directly with the Yaskawa Controller over a local network.
 
 ```text
 Operator PC (Python Script)
@@ -149,6 +151,8 @@ Upon successful execution (in either Simulation or Real Robot mode), a Matplotli
 ## Results
 
 <img width="1839" height="574" alt="image" src="https://github.com/user-attachments/assets/544ce960-b92b-4fe1-889f-85a0afed00f6" />
+
+https://github.com/user-attachments/assets/b3666340-9a34-4df7-85dc-d489bf366928
 
 <video width="100%" controls>
   <source src="assets/IMG_9863.mov" type="video/mp4">
