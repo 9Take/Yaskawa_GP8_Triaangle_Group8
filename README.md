@@ -73,7 +73,7 @@ git clone https://github.com/UnderAutomation/Yaskawa.py
 git clone <your-repository-url>
 cd <your-project-folder>
 ```
-Before do next step make sure you already following the requirements of [![Yaskawa](https://img.shields.io/badge/Yaskawa-SDK-0055A5?logo=yaskawa)](https://github.com/UnderAutomation/Yaskawa.py)
+Before do next step make sure you already following the requirements of [Yaskawa](https://github.com/UnderAutomation/Yaskawa.py)
 
 ### 2. Configure Virtual Environment (Recommended)
 
