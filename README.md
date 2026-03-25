@@ -69,11 +69,11 @@ Ensure the following are prepared before running the script:
 
 ### 1. Clone the Repository
 ```bash
-git clone [Yaskawa.py](https://github.com/UnderAutomation/Yaskawa.py)
+git clone https://github.com/UnderAutomation/Yaskawa.py
 git clone <your-repository-url>
 cd <your-project-folder>
 ```
-Before do next step make sure you already following the requirements of [Yaskawa.py]
+Before do next step make sure you already following the requirements of [![Yaskawa](https://img.shields.io/badge/Yaskawa-SDK-0055A5?logo=yaskawa)](https://github.com/UnderAutomation/Yaskawa.py)
 
 ### 2. Configure Virtual Environment (Recommended)
 
