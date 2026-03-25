@@ -31,4 +31,28 @@ def main():
     L = 150.0 
     h = L * (math.sqrt(3) / 2) 
     
+    pt_bottom = (home_y, home_z)                           
+    pt_top_right = (home_y - (L / 2), home_z + h)          
+    pt_top_left = (home_y + (L / 2), home_z + h)           
+    
+    cy = (pt_bottom[0] + pt_top_right[0] + pt_top_left[0]) / 3.0
+    cz = (pt_bottom[1] + pt_top_right[1] + pt_top_left[1]) / 3.0
+    
+    triangle_waypoints = [pt_bottom, pt_top_right, pt_top_left, pt_bottom]
+    trajectory_points = []
+
+    for i in range(len(triangle_waypoints)-1):
+        y1, z1 = triangle_waypoints[i]
+        y2, z2 = triangle_waypoints[i+1]
+        
+        dist = math.hypot(y2 - y1, z2 - z1)
+        num_steps = max(1, int(dist / STEP_SIZE))
+        
+        for j in range(num_steps):
+            y = y1 + (y2 - y1) * (j / num_steps)
+            z = z1 + (z2 - z1) * (j / num_steps)
+            trajectory_points.append((fixed_x, y, z, fixed_rx, fixed_ry, fixed_rz))
+            
+    trajectory_points.append((fixed_x, pt_bottom[0], pt_bottom[1], fixed_rx, fixed_ry, fixed_rz))
+
     
