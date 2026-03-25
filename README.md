@@ -1,83 +1,85 @@
-# Yaskawa_GP8_Triaangle_Group8
-# 🤖 Yaskawa Robot - Y-Z Plane Triangle Trajectory
+จัดให้ครับ! คุณสามารถกดปุ่ม **"Copy"** ที่มุมขวาบนของกล่องโค้ดด้านล่างนี้ แล้วนำไปวางในไฟล์ที่ชื่อ `README.md` ของโปรเจกต์คุณได้เลยครับ รูปแบบทั้งหมดจะถูกจัดหน้าบน GitHub อย่างสวยงามแน่นอนครับ
 
-This project controls a **Yaskawa industrial robot arm** using Python via the High Speed Ethernet Server (HSES) protocol. It commands the End-Effector to draw an **"equilateral triangle"** trajectory in the vertical plane (Y-Z Plane) while strictly maintaining a constant wrist orientation (no wrist twisting).
+```markdown
+# 🤖 Yaskawa GP8 Triangle Trajectory
 
-It includes a built-in Simulation Mode and generates 3 distinct plots to analyze the robot's kinematic behavior:
-1. **Cartesian Path (Y-Z Plane):** The physical trajectory of the triangle.
-2. **End-Effector Orientation:** Verifies that the wrist angles (Rx, Ry, Rz) remain completely locked.
-3. **Joint Angles:** Tracks the movement of all 6 individual servo motors (S, L, U, R, B, T axes) in Pulses.
+> Robot arm control service for tracing an equilateral triangle — built with **Python + Yaskawa SDK (HSES)**, featuring real-time kinematic simulation and joint pulse tracking.
 
----
-
-## ⚙️ Prerequisites
-
-- Python 3.8 or higher.
-- A physical LAN connection between your PC and the Yaskawa Controller. (Your PC must be set to a Static IP on the same subnet, e.g., `192.168.10.XX`).
-- The robot controller must be set to **Remote Mode** and capable of turning **Servo ON**.
-
-## 📦 Installation
-
-1. Clone and do the requirements this repository to your local machine:
-    ```bash
-    git clone <your-repository-url>
-    cd <your-project-folder>
-
-2. (Recommended) Create and activate a Virtual Environment:
-    python -m venv .yaskava_env
-
-    # For Linux/Mac:
-    source .yaskava_env/bin/activate  
-
-    # For Windows:
-    .yaskava_env\Scripts\activate
-
-3. Install all required dependencies using requirements.txt:
-    pip install -r requirements.txt
-
-Gemini said
-Here is the README.md and the instructions for setting up your requirements.txt file in English. I've included the project details, configuration instructions, and crucial safety warnings so it is ready for your lab report or GitHub repository!
-
-📝 1. Setting up requirements.txt
-Create a new file named requirements.txt in the same directory as your Python script, and paste the following content into it:
-
-Plaintext
-# Yaskawa Robot SDK (Based on https://github.com/UnderAutomation/Yaskawa.py)
-underautomation.yaskawa
-
-# Data Science & Plotting Libraries
-numpy==2.4.3
-matplotlib==3.10.8
-📝 2. The README.md File
-You can copy and paste the Markdown below to create the README.md file for your project:
-
-Markdown
-# 🤖 Yaskawa Robot - Y-Z Plane Triangle Trajectory
-
-This project controls a **Yaskawa industrial robot arm (YRC1000micro)** using Python via the High Speed Ethernet Server (HSES) protocol. It commands the End-Effector to draw an **"equilateral triangle"** trajectory in the vertical plane (Y-Z Plane) while strictly maintaining a constant wrist orientation (no wrist twisting).
-
-It includes a built-in Simulation Mode and generates 3 distinct plots to analyze the robot's kinematic behavior:
-1. **Cartesian Path (Y-Z Plane):** The physical trajectory of the triangle.
-2. **End-Effector Orientation:** Verifies that the wrist angles (Rx, Ry, Rz) remain completely locked.
-3. **Joint Angles:** Tracks the movement of all 6 individual servo motors (S, L, U, R, B, T axes) in Pulses.
+[![Python](https://img.shields.io/badge/Python-3.8+-blue?logo=python)](https://www.python.org/)
+[![Yaskawa](https://img.shields.io/badge/Yaskawa-SDK-0055A5?logo=yaskawa)](https://github.com/UnderAutomation/Yaskawa.py)
+[![NumPy](https://img.shields.io/badge/NumPy-2.4.3-013243?logo=numpy)](https://numpy.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.10.8-11557c?logo=plotly)](https://matplotlib.org/)
 
 ---
 
-## ⚙️ Prerequisites
+## 🚀 Overview
 
-- Python 3.8 or higher.
-- A physical LAN connection between your PC and the Yaskawa Controller. (Your PC must be set to a Static IP on the same subnet, e.g., `192.168.10.XX`).
-- The robot controller must be set to **Remote Mode** and capable of turning **Servo ON**.
+This script acts as the **"Controller"** within a robotic workcell — processing trajectory calculations and returning precise Cartesian and Joint movements via the **High Speed Ethernet Server (HSES) protocol**.
 
-## 📦 Installation
+The program commands a Yaskawa industrial robot (e.g., YRC1000micro) to draw a **150mm equilateral triangle** in the vertical (Y-Z) plane while strictly locking the wrist orientation to prevent unwanted twisting.
 
-1. Clone this repository to your local machine:
-   ```bash
-   git clone <your-repository-url>
-   cd <your-project-folder>
-(Recommended) Create and activate a Virtual Environment:
+### Key Features
 
-Bash
+| Feature | Description | Purpose |
+|---------|-----------|---------|
+| `Cartesian Path` | Y-Z Plane Tracking | Verifies the physical trajectory of the triangle. |
+| `Orientation Lock` | Rx, Ry, Rz Monitoring | Ensures wrist angles remain perfectly constant. |
+| `Joint Tracking` | S, L, U, R, B, T Pulses | Analyzes individual servo motor behavior over time. |
+
+---
+
+## 🏗️ Architecture
+
+The Python script communicates directly with the Yaskawa Controller over a local network.
+
+```text
+Operator PC (Python Script)
+      │
+      ▼  LAN (e.g., 192.168.10.XX)
+┌─────────────────────────┐
+│  Yaskawa Controller     │  ◄── YRC1000 / YRC1000micro
+│  (HSES Protocol)        │      Port: UDP 10040 (Default)
+└────────────┬────────────┘
+             │  Servo Commands & Feedback
+      ┌──────┴──────┐
+      ▼             ▼
+┌──────────┐  ┌───────────┐
+│ Cartesian│  │   Joint   │  ◄── GP8 Robot Arm
+│ Movement │  │  Feedback │      (S, L, U, R, B, T)
+└──────────┘  └───────────┘
+```
+
+---
+
+## 📦 Prerequisites
+
+Ensure the following are prepared before running the script:
+
+- **Software:**
+  - [Python 3.8+](https://www.python.org/downloads/)
+  - [Git](https://git-scm.com/)
+- **Hardware/Network:**
+  - A physical LAN connection to the Yaskawa Controller.
+  - PC set to a Static IP on the same subnet (e.g., `192.168.10.100` if the robot is `192.168.10.101`).
+- **Robot State:**
+  - Controller must be in **Remote Mode**.
+  - System must be clear of alarms and capable of turning **Servo ON**.
+
+---
+
+## ⚡ Quick Start
+
+### 1. Clone the Repository
+```bash
+git clone <your-repository-url>
+cd <your-project-folder>
+```
+
+### 2. Configure Virtual Environment (Recommended)
+
+Create and activate a Python virtual environment to keep dependencies isolated:
+
+```bash
 python -m venv .yaskava_env
 
 # For Linux/Mac:
@@ -85,107 +87,71 @@ source .yaskava_env/bin/activate
 
 # For Windows:
 .yaskava_env\Scripts\activate 
-Install all required dependencies using requirements.txt:
+```
 
-Bash
-pip install -r requirements.txt
-Note: The robot control library is based on UnderAutomation/Yaskawa.py.
+### 3. Install Dependencies
 
-🚀 Usage
-Inside the main script (e.g., triangle.py), you will find a configuration section at the top of the main() function. You can adjust these variables before running:
-
-SIMULATION_MODE = True    # Set to True to preview graphs without moving the real robot.
-ROBOT_SPEED = 10          # The movement speed of the robot (%).
-STEP_SIZE = 80            # The distance between trajectory points (helps prevent 'Manipulator Operating' errors).
-DELAY_BETWEEN_STEPS = 1   # Pause duration (in seconds) to allow the robot to finish each step.
-
-Gemini said
-Here is the README.md and the instructions for setting up your requirements.txt file in English. I've included the project details, configuration instructions, and crucial safety warnings so it is ready for your lab report or GitHub repository!
-
-📝 1. Setting up requirements.txt
-Create a new file named requirements.txt in the same directory as your Python script, and paste the following content into it:
-
-Plaintext
-# Yaskawa Robot SDK (Based on https://github.com/UnderAutomation/Yaskawa.py)
+Create a `requirements.txt` file (if not already present) with the following content:
+```text
 underautomation.yaskawa
-
-# Data Science & Plotting Libraries
 numpy==2.4.3
 matplotlib==3.10.8
-📝 2. The README.md File
-You can copy and paste the Markdown below to create the README.md file for your project:
+```
 
-Markdown
-# 🤖 Yaskawa Robot - Y-Z Plane Triangle Trajectory
-
-This project controls a **Yaskawa industrial robot arm (YRC1000micro)** using Python via the High Speed Ethernet Server (HSES) protocol. It commands the End-Effector to draw an **"equilateral triangle"** trajectory in the vertical plane (Y-Z Plane) while strictly maintaining a constant wrist orientation (no wrist twisting).
-
-It includes a built-in Simulation Mode and generates 3 distinct plots to analyze the robot's kinematic behavior:
-1. **Cartesian Path (Y-Z Plane):** The physical trajectory of the triangle.
-2. **End-Effector Orientation:** Verifies that the wrist angles (Rx, Ry, Rz) remain completely locked.
-3. **Joint Angles:** Tracks the movement of all 6 individual servo motors (S, L, U, R, B, T axes) in Pulses.
-
----
-
-## ⚙️ Prerequisites
-
-- Python 3.8 or higher.
-- A physical LAN connection between your PC and the Yaskawa Controller. (Your PC must be set to a Static IP on the same subnet, e.g., `192.168.10.XX`).
-- The robot controller must be set to **Remote Mode** and capable of turning **Servo ON**.
-
-## 📦 Installation
-
-1. Clone this repository to your local machine:
-   ```bash
-   git clone <your-repository-url>
-   cd <your-project-folder>
-(Recommended) Create and activate a Virtual Environment:
-
-Bash
-python -m venv .yaskava_env
-
-# For Linux/Mac:
-source .yaskava_env/bin/activate  
-
-# For Windows:
-.yaskava_env\Scripts\activate 
-Install all required dependencies using requirements.txt:
-
-Bash
+Then, install them:
+```bash
 pip install -r requirements.txt
-Note: The robot control library is based on UnderAutomation/Yaskawa.py.
+```
+> *Note: The robot control library is based on [UnderAutomation/Yaskawa.py](https://github.com/UnderAutomation/Yaskawa.py).*
 
-🚀 Usage
-Inside the main script (e.g., triangle.py), you will find a configuration section at the top of the main() function. You can adjust these variables before running:
-
-Python
-SIMULATION_MODE = True    # Set to True to preview graphs without moving the real robot.
-ROBOT_SPEED = 10          # The movement speed of the robot (%).
-STEP_SIZE = 80            # The distance between trajectory points (helps prevent 'Manipulator Operating' errors).
-DELAY_BETWEEN_STEPS = 1   # Pause duration (in seconds) to allow the robot to finish each step.
-To run the program:
-
-Bash
+### 4. Launch the Script
+```bash
 python triangle.py
+```
 
-📊 Output Graphs Explained
-Upon successful execution (in either Simulation or Real Robot mode), a window with 3 graphs will appear:
+---
 
-Left (Y-Z Plane): A front-view visualization of the End-Effector drawing the equilateral triangle.
+## ⚙️ Configuration
 
-Center (Orientation): Displays the Rx (180°), Ry (-8.976°), and Rz (0°) angles as flat horizontal lines, proving the wrist orientation is locked.
+Inside the main script (`triangle.py`), you will find a configuration section at the top of the `main()` function. Adjust these variables before running based on your testing phase:
 
-Right (Joint Pulses): Shows the pulse values of the 6 motors (S, L, U, R, B, T) over time, allowing you to analyze how each joint contributes to the linear Cartesian movement.
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `SIMULATION_MODE` | `True` | Set to `True` to preview plots safely. Set to `False` to move the physical robot. |
+| `ROBOT_SPEED` | `10` | Cartesian movement speed (%). |
+| `STEP_SIZE` | `80` | Distance (mm) between interpolated trajectory points. |
+| `DELAY_BETWEEN_STEPS`| `1` | Pause duration (seconds) to allow the robot to finish a segment (prevents "Manipulator Operating" errors). |
 
-⚠️ Safety Warning
-Robot Hazard: Industrial robots move at high speeds and with significant force.
+---
 
-Before changing SIMULATION_MODE = False, physically verify that the robot's workspace is completely clear of people, cables, and obstacles.
+## 📊 Output Graphs Explained
 
-The Operator MUST hold the Teach Pendant in their hands and be ready to press the Emergency Stop (E-Stop) button at all times while this script is executing.
+Upon successful execution (in either Simulation or Real Robot mode), a Matplotlib window with 3 graphs will appear:
 
+1. **Left (Y-Z Plane):** A front-view visualization of the End-Effector tracing the equilateral triangle.
+2. **Center (Orientation):** Displays the Rx (180°), Ry (-8.976°), and Rz (0°) angles as flat horizontal lines, proving the wrist orientation is locked.
+3. **Right (Joint Pulses):** Shows the pulse values of the 6 motors (S, L, U, R, B, T axes) over time, allowing you to analyze how each joint contributes to the linear Cartesian movement.
 
-Group 8:
-Thanpisit Banyam    6601023611035
-Putthakhun Horthong 6601023621022
-Teetawat Songsaard  6601023621065
+---
+
+## ⚠️ Safety Warning
+
+**CRITICAL: Industrial robots move at high speeds and with significant force.**
+
+- **Clear the Area:** Before changing `SIMULATION_MODE = False`, physically verify that the robot's workspace is completely clear of people, cables, and obstacles.
+- **Hold the Pendant:** The Operator **MUST** hold the Teach Pendant in their hands and be ready to press the **Emergency Stop (E-Stop)** button at all times while this script is executing.
+- **First Run:** Always test with `SIMULATION_MODE = True` first to verify the mathematical trajectory before sending commands to the servo motors.
+
+---
+
+## 👥 Team
+
+**Group 8** — Yaskawa GP8 Triangle Trajectory
+- Thanpisit Banyam (6601023611035)
+- Putthakhun Horthong (6601023621022)
+- Teetawat Songsaard (6601023621065)
+
+---
+
+*Python · Yaskawa SDK · HSES Protocol*
+```
