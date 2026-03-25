@@ -1,6 +1,3 @@
-จัดให้ครับ! คุณสามารถกดปุ่ม **"Copy"** ที่มุมขวาบนของกล่องโค้ดด้านล่างนี้ แล้วนำไปวางในไฟล์ที่ชื่อ `README.md` ของโปรเจกต์คุณได้เลยครับ รูปแบบทั้งหมดจะถูกจัดหน้าบน GitHub อย่างสวยงามแน่นอนครับ
-
-```markdown
 # 🤖 Yaskawa GP8 Triangle Trajectory
 
 > Robot arm control service for tracing an equilateral triangle — built with **Python + Yaskawa SDK (HSES)**, featuring real-time kinematic simulation and joint pulse tracking.
